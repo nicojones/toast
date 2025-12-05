@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { defineCollection, defineConfig } from "@content-collections/core";
 import { compileMDX } from "@content-collections/mdx";
 
@@ -31,10 +32,11 @@ const docs = defineCollection({
   name: "docs",
   directory: "src/docs",
   include: "**/*.mdx",
-  schema: (z) => ({
+  schema: z.object({
     title: z.string(),
     description: z.string(),
     category: z.string(),
+    content: z.string(),
   }),
   transform: async (document, context) => {
     const mdx = await compileMDX(context, document, {
