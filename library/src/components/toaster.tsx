@@ -50,8 +50,6 @@ export const Toaster = ({
         return pt
       })
 
-      console.log('[DEBUG] toasts?', updatedToasts);
-
       if (isToastUpdate) {
         // `newToast` is embedded, array preserves length
         return [...updatedToasts]
@@ -77,7 +75,7 @@ export const Toaster = ({
   // Assign openToast to the global variable
   openToastGlobal = openToast;
   // Assign closeToast to the global variable
-  closeToastGlobal = closeToast
+  closeToastGlobal = closeToast;
 
   // Render the component
   return (

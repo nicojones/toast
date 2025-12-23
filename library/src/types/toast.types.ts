@@ -36,7 +36,7 @@ export type ToastProps = {
   /**
    * Set any HTML Attributes to the notification
    */
-  attrs?: HTMLProps<HTMLDivElement>
+  attrs?: HTMLProps<HTMLDivElement>;
 };
 
 export interface LoadingType<T = unknown> {

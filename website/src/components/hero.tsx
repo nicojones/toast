@@ -55,7 +55,7 @@ const RenderToastAnimation = () => {
       onClick={() =>
         toast.default({
           text: "pheralb/toast",
-          description: "✨ A beautiful toast library for React"
+          description: "✨ A beautiful toast library for React",
         })
       }
       onMouseEnter={() => {
