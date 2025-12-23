@@ -1,8 +1,8 @@
 import type {
   ToastPropsWithLoading,
-  ToastPropsWithVariant,
+  ToastPropsWithVariant
 } from '../types/toast.types';
-import { openToast } from './toaster';
+import { openToast, closeToast } from './toaster';
 
 interface ToastFunctions {
   default: (data: ToastPropsWithVariant) => ToastPropsWithVariant;
@@ -39,3 +39,5 @@ export const toast: ToastFunctions = {
     return data;
   },
 };
+
+export { closeToast };

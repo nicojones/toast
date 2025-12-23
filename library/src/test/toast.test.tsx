@@ -83,4 +83,31 @@ describe("🚀 Toast notifications", () => {
     // Restore the original console.log
     consoleSpy.mockRestore();
   });
+
+    /** 📦 Test the HTMLProps: */
+    test("should display toast html props", async () => {
+      const consoleSpy = vi.spyOn(console, "log");
+  
+      render(
+        <>
+          <Toaster position="bottom-right" theme="dark" data-testid='toast-container' />
+          <ToastActionsComponent />
+        </>,
+      );
+  
+      const button = screen.getByText("Show Toast");
+      fireEvent.click(button);
+  
+      // Verify toast content is displayed
+      await waitFor(() => {
+        expect(screen.getByText("Hello Toast!")).toBeInTheDocument();
+        expect(screen.getByText("This is a success toast")).toBeInTheDocument();
+
+        expect(screen.getByTestId('toast-element')).toBeInTheDocument();
+        expect(screen.getByTestId('toast-container')).toBeInTheDocument();
+      });
+
+      // Restore the original console.log
+      consoleSpy.mockRestore();
+    });
 });

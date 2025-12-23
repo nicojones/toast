@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { HTMLProps, ReactNode } from "react";
 
 export type Variant = "success" | "error" | "warning" | "info" | "loading";
 
@@ -19,14 +19,24 @@ export interface Action {
 
 export type ToastIcons = Record<Variant, ReactNode>;
 
+export type ToastId = number | string;
+
 export type ToastProps = {
-  id?: number;
+  /**
+   * Optionally set an ID.
+   * If the ID exists, it will replace the existing notification
+   */
+  id?: ToastId;
   text: string;
   description?: string;
   icon?: ReactNode;
   delayDuration?: number;
   theme?: Theme;
   action?: Action;
+  /**
+   * Set any HTML Attributes to the notification
+   */
+  attrs?: HTMLProps<HTMLDivElement>
 };
 
 export interface LoadingType<T = unknown> {
@@ -35,7 +45,7 @@ export interface LoadingType<T = unknown> {
   error: string;
   autoDismiss: boolean;
   onSuccess?: (data: T) => void;
-  onError?: (error: Error) => void;
+  onError?: (error: Error, id?: ToastId) => void;
 }
 
 interface ToastActionsCustomClassnames {
@@ -64,7 +74,12 @@ export type ToastOptions = {
   defaultCloseContent?: string | ReactNode;
 };
 
-export type ToasterProperties = {
+export type ToasterHTMLElementProperties = Omit<
+  HTMLProps<HTMLElement>,
+  'aria-role' | 'aria-label' | 'role' | 'className'
+>;
+
+export type ToasterProperties = ToasterHTMLElementProperties & {
   theme?: Theme;
   maxToasts?: number;
   position?: Position;

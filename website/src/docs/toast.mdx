@@ -110,6 +110,23 @@ toast.default({
 });
 ```
 
+## Attributes
+
+You can pass custom HTML Attributes to the toast:
+
+```tsx {3}
+toast.default({
+  text: "Way too custom!",
+  attrs: {
+    'aria-customized': 'yes',
+    'data-testid': 'my-test-id',
+    style: {
+      color: 'pink'
+    }
+  }
+});
+```
+
 ## API Reference
 
 The `toast.variant` function accepts the following options:
@@ -123,3 +140,4 @@ The `toast.variant` function accepts the following options:
 | `variant`       | Variant of the toast                          | `Variant`: `info`, `success`, `warning`, `error` or `loading`                 | -        |
 | `theme`         | Theme of the toast                            | `Theme` (default: `system`): `light`, `dark` or `system`                      | -        |
 | `action`        | Show a _Action_ button and execute a function | `label` (default text: `action`) & `onClick`: `() => void` or `Promise<void>` | -        |
+| `id`            | Set a unique `id` to replace an existing toast or ensure there are no duplicates | `string` or `number`                       | -        |
