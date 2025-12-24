@@ -165,17 +165,20 @@ toast.success({
 Show a toast with loading state that automatically updates after a promise resolves or fails:
 
 ```tsx
-toast.loading({
+const somePromise = (): Promise<Foo> => { ... }
+
+toast.loading<Foo>({
   // Initial message:
   text: "Loading",
   options: {
-    promise: yourFunction(),
+    promise: somePromise(),
     success: "Ready",
     error: "Error",
     // Close toast automatically (the duration depends by delayDuration property):
     autoDismiss: true,
     // Optional:
     onSuccess: (data) => {
+      // `data is of type Foo`
       console.log("Success", data);
     },
     // Optional:
@@ -531,8 +534,8 @@ The `toast.loading` function accepts the same options as above, plus:
 | `success`     | Success message                               | `string`                                | ✅       |
 | `error`       | Error message                                 | `string`                                | ✅       |
 | `autoDismiss` | Close toast automatically after promise       | `boolean`                               | ✅       |
-| `onSuccess`  | Callback when promise resolves                 | `(data: T) => void`                     | -        |
-| `onError`     | Callback when promise rejects                 | `(error: Error, id?: ToastId) => void`  | -        |
+| `onSuccess`  | Callback when promise resolves                 | `(data: T, id: ToastId) => void`        | -        |
+| `onError`     | Callback when promise rejects                 | `(error: Error, id: ToastId) => void`   | -        |
 
 ### `toast.close()`
 

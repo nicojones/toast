@@ -4,6 +4,7 @@ import type {
   ToastOptions,
   ToastPropsWithLoading,
   Variant,
+  ToastPropsInternal,
 } from "../types/toast.types";
 
 import { useCallback, useEffect, useState } from "react";
@@ -14,12 +15,16 @@ import { cn, getSystemTheme, prefersReducedMotion } from "../utils";
 
 import { iconsColors, getAnimationClass } from "./default-options";
 
-interface ToastComponentProps extends ToastPropsWithLoading {
+type ToastComponentProps = ToastPropsInternal &
+  Pick<ToastPropsWithLoading, 'options'> &
+{
   toastPosition: ToastPosition;
   toastOptions?: ToastOptions;
   active?: boolean;
   onClose: () => void;
-}
+};
+
+const DEFAULT_DURATION = 4000;
 
 const Toast = (props: ToastComponentProps) => {
   const [status, setStatus] = useState<Variant>(props.variant || "info");
@@ -27,7 +32,7 @@ const Toast = (props: ToastComponentProps) => {
   const [toastText, setToastText] = useState<string>(props.text);
   const [isExiting, setIsExiting] = useState<boolean>(false);
 
-  const delayDuration = props.delayDuration || 4000;
+  const delayDuration = props.delayDuration || DEFAULT_DURATION;
 
   const { pause, resume } = useTimeout(() => {
     handleCloseToast();
@@ -155,13 +160,13 @@ const Toast = (props: ToastComponentProps) => {
       aria-describedby={`toast-description-${props.id}`}
       title={props.text}
       className={cn(
-        !prefersReducedMotion()
-          ? getAnimationClass(
-              isExiting,
-              props.toastOptions?.animationOnClose || "slide",
-              props.toastPosition,
-            )
-          : "",
+        prefersReducedMotion() || props.isUpdate
+          ? ""
+          : getAnimationClass(
+            isExiting,
+            props.toastOptions?.animationOnClose || "slide",
+            props.toastPosition,
+          ),
         !props.toastOptions?.headless && props.theme === "system"
           ? getSystemTheme()
           : "",
