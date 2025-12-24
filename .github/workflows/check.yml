@@ -18,6 +18,9 @@ jobs:
     name: 🔎 Eslint
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
       - name: Setup
         uses: ./.github/actions/setup
 
@@ -29,6 +32,9 @@ jobs:
     name: 🧱 Format
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
       - name: Setup
         uses: ./.github/actions/setup
 
@@ -39,6 +45,9 @@ jobs:
     name: 🛫 Build Library
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
       - name: Setup
         uses: ./.github/actions/setup
 
@@ -49,6 +58,9 @@ jobs:
     name: 🧪 Vitest
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
       - name: Setup
         uses: ./.github/actions/setup
 
