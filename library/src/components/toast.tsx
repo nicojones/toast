@@ -160,7 +160,7 @@ const Toast = (props: ToastComponentProps) => {
       aria-describedby={`toast-description-${props.id}`}
       title={props.text}
       className={cn(
-        prefersReducedMotion() || props.isUpdate
+        prefersReducedMotion()
           ? ""
           : getAnimationClass(
             isExiting,
