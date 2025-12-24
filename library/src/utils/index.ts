@@ -2,7 +2,8 @@ export const cn = (...classes: (string | undefined)[]) => {
   return classes.filter(Boolean).join(" ");
 };
 
-export const generateRandomId = () => Math.floor(Math.random() * 1000000);
+export const generateRandomId = () =>
+  Math.random().toString(16).slice(2, 10);
 
 export const prefersReducedMotion = (() => {
   let shouldReduceMotion: boolean | undefined = undefined;

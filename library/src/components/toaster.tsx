@@ -30,7 +30,8 @@ export const Toaster = ({
 
   // Define the openToast function
   const openToast = (data: ToastPropsWithVariant) => {
-    const newToast = {
+    const newToast: ToastPropsWithVariant = {
+      _key_: generateRandomId(),
       id: generateRandomId(),
       ...data,
     };
@@ -99,7 +100,7 @@ export const Toaster = ({
       >
         {toasts.map((toast) => (
           <ToastComponent
-            key={toast.id}
+            key={toast._key_}
             theme={theme}
             toastPosition={position}
             onClose={() => closeToast(toast.id!)}

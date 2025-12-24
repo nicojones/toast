@@ -2,7 +2,7 @@ import type { HTMLProps, ReactNode } from "react";
 
 export type Variant = "success" | "error" | "warning" | "info" | "loading";
 
-export type Position =
+export type ToastPosition =
   | "top-left"
   | "top-right"
   | "top-center"
@@ -12,7 +12,7 @@ export type Position =
 
 export type Theme = "light" | "dark" | "system";
 
-export interface Action {
+export type ToastAction = {
   content?: string | ReactNode;
   onClick: () => void | (() => Promise<void>);
 }
@@ -27,34 +27,36 @@ export type ToastProps = {
    * If the ID exists, it will replace the existing notification
    */
   id?: ToastId;
+  /** @internal */
+  _key_?: string;
   text: string;
   description?: string;
   icon?: ReactNode;
   delayDuration?: number;
   theme?: Theme;
-  action?: Action;
+  action?: ToastAction;
   /**
    * Set any HTML Attributes to the notification
    */
   attrs?: HTMLProps<HTMLDivElement>;
 };
 
-export interface LoadingType<T = unknown> {
+export type LoadingType<T = unknown> = {
   promise: (() => Promise<T>) | Promise<T>;
   success: string;
   error: string;
   autoDismiss: boolean;
-  onSuccess?: (data: T) => void;
-  onError?: (error: Error, id?: ToastId) => void;
+  onSuccess?: (data: T, id: ToastId) => void;
+  onError?: (error: Error, id: ToastId) => void;
 }
 
-interface ToastActionsCustomClassnames {
+type ToastActionsCustomClassnames = {
   container: string;
   closeBtn: string;
   actionBtn: string;
 }
 
-export interface ToastClassnames {
+export type ToastClassnames = {
   toast?: string;
   container?: string;
   icon?: string;
@@ -82,14 +84,14 @@ export type ToasterHTMLElementProperties = Omit<
 export type ToasterProperties = ToasterHTMLElementProperties & {
   theme?: Theme;
   maxToasts?: number;
-  position?: Position;
+  position?: ToastPosition;
   toastOptions?: ToastOptions;
 };
 
-export interface ToastPropsWithVariant extends ToastProps {
+export type ToastPropsWithVariant = ToastProps & {
   variant?: Variant;
 }
 
-export interface ToastPropsWithLoading extends ToastPropsWithVariant {
-  options?: LoadingType;
+export type ToastPropsWithLoading<T = unknown> = ToastPropsWithVariant & {
+  options?: LoadingType<T>;
 }

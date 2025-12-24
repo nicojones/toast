@@ -11,7 +11,7 @@ interface ToastFunctions {
   error: (data: ToastPropsWithVariant) => ToastPropsWithVariant;
   warning: (data: ToastPropsWithVariant) => ToastPropsWithVariant;
   info: (data: ToastPropsWithVariant) => ToastPropsWithVariant;
-  loading: (data: ToastPropsWithLoading) => ToastPropsWithLoading;
+  loading: <T = unknown>(data: ToastPropsWithLoading<T>) => ToastPropsWithLoading<T>;
   close: (id: ToastId) => void;
 }
 
@@ -36,7 +36,7 @@ export const toast: ToastFunctions = {
     openToast({ ...data, variant: 'info' });
     return data;
   },
-  loading: (data: ToastPropsWithLoading) => {
+  loading: <T = unknown>(data: ToastPropsWithLoading<T>) => {
     openToast({ ...data, variant: 'loading' });
     return data;
   },
