@@ -71,6 +71,27 @@ jobs:
         with:
           name: node_modules_and_store
 
+      - name: Prettier - Format
+        run: pnpm format
+
+
+
+  lint:
+    name: 🕵️ Lint
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Download cached node_modules and pnpm store
+        uses: actions/download-artifact@v4
+        with:
+          name: node_modules_and_store
+
+      - name: Eslint
+        run: pnpm lint
+
   build:
     name: 🏗️ Build
     runs-on: ubuntu-latest
@@ -83,6 +104,9 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: node_modules_and_store
+      
+      - name: Build library
+        run: pnpm build
 
   test:
     name: 🧪 Test
@@ -97,15 +121,5 @@ jobs:
         with:
           name: node_modules_and_store
 
-  lint:
-    name: 🕵️ Lint
-    runs-on: ubuntu-latest
-    needs: setup
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v4
-
-      - name: Download cached node_modules and pnpm store
-        uses: actions/download-artifact@v4
-        with:
-          name: node_modules_and_store
+      - name: Vitest - Library
+        run: pnpm test
