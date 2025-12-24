@@ -14,113 +14,43 @@ concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
 
-  setup:
-    name: 🏗️ Setup Environment
-    runs-on: ubuntu-latest
-    outputs:
-      pnpm-cache-path: ${{ steps.pnpm-cache.outputs.pnpm_store_path }}
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v4
-
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          run_install: false
-
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: echo "pnpm_store_path=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      - name: Cache node_modules and pnpm store
-        uses: actions/cache@v4
-        id: cache
-        with:
-          path: |
-            node_modules
-            ${{ steps.pnpm-cache.outputs.pnpm_store_path }}
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Persist node_modules and pnpm store
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: node_modules_and_store
-          path: |
-            node_modules
-            ${{ steps.pnpm-cache.outputs.pnpm_store_path }}
-
-  format:
-    name: 🧱 Format
-    runs-on: ubuntu-latest
-    needs: setup
-    steps:
-      - name: Download cached node_modules and pnpm store
-        uses: actions/download-artifact@v4
-        with:
-          name: node_modules_and_store
-
-      - name: Add pnpm to PATH
-        run: echo "$(pwd)/node_modules/.bin" >> $GITHUB_PATH
-
-      - name: Prettier - Format
-        run: pnpm format
-
-
-
   lint:
-    name: 🕵️ Lint
+    name: 🔎 Eslint
     runs-on: ubuntu-latest
-    needs: setup
     steps:
-      - name: Download cached node_modules and pnpm store
-        uses: actions/download-artifact@v4
-        with:
-          name: node_modules_and_store
-      
-      - name: Add pnpm to PATH
-        run: echo "$(pwd)/node_modules/.bin" >> $GITHUB_PATH
+      - name: Setup
+        uses: ./.github/actions/setup
 
       - name: Eslint
         run: pnpm lint
 
-  build:
-    name: 🏗️ Build
+  
+  format:
+    name: 🧱 Format
     runs-on: ubuntu-latest
-    needs: setup
     steps:
+      - name: Setup
+        uses: ./.github/actions/setup
 
-      - name: Download cached node_modules and pnpm store
-        uses: actions/download-artifact@v4
-        with:
-          name: node_modules_and_store
+      - name: Prettier
+        run: pnpm format
 
-      - name: Add pnpm to PATH
-        run: echo "$(pwd)/node_modules/.bin" >> $GITHUB_PATH
-      
+  build:
+    name: 🛫 Build Library
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup
+        uses: ./.github/actions/setup
+
       - name: Build library
         run: pnpm build
 
-  test:
-    name: 🧪 Test
+  vitest:
+    name: 🧪 Vitest
     runs-on: ubuntu-latest
-    needs: setup
     steps:
-      - name: Download cached node_modules and pnpm store
-        uses: actions/download-artifact@v4
-        with:
-          name: node_modules_and_store
-
-      - name: Add pnpm to PATH
-        run: echo "$(pwd)/node_modules/.bin" >> $GITHUB_PATH
+      - name: Setup
+        uses: ./.github/actions/setup
 
       - name: Vitest - Library
         run: pnpm test
