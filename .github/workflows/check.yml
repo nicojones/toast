@@ -57,6 +57,7 @@ jobs:
           path: |
             node_modules
             ${{ steps.pnpm-cache.outputs.pnpm_store_path }}
+
   format:
     name: 🧱 Format
     runs-on: ubuntu-latest
@@ -65,66 +66,46 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
 
-      - name: Restore node_modules from cache
-        uses: actions/cache@v4
+      - name: Download cached node_modules and pnpm store
+        uses: actions/download-artifact@v4
         with:
-          path: |
-            node_modules
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-
-      - name: Prettier - Format
-        run: pnpm format
-
-  lint:
-    name: 🔎 Eslint
-    runs-on: ubuntu-latest
-    needs: setup
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v4
-
-      - name: Restore node_modules from cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            node_modules
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-
-      - name: Eslint
-        run: pnpm lint
+          name: node_modules_and_store
 
   build:
-    name: 🛫 Build Library
+    name: 🏗️ Build
     runs-on: ubuntu-latest
     needs: setup
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
 
-      - name: Restore node_modules from cache
-        uses: actions/cache@v4
+      - name: Download cached node_modules and pnpm store
+        uses: actions/download-artifact@v4
         with:
-          path: |
-            node_modules
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          name: node_modules_and_store
 
-      - name: Build library
-        run: pnpm build
-
-  vitest:
-    name: 🧪 Vitest
+  test:
+    name: 🧪 Test
     runs-on: ubuntu-latest
     needs: setup
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
 
-      - name: Restore node_modules from cache
-        uses: actions/cache@v4
+      - name: Download cached node_modules and pnpm store
+        uses: actions/download-artifact@v4
         with:
-          path: |
-            node_modules
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          name: node_modules_and_store
 
-      - name: Vitest - Library
-        run: pnpm test
+  lint:
+    name: 🕵️ Lint
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Download cached node_modules and pnpm store
+        uses: actions/download-artifact@v4
+        with:
+          name: node_modules_and_store
