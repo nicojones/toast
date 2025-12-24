@@ -45,7 +45,6 @@ jobs:
         run: |
           if [[ -n $(git status --porcelain) ]]; then
             echo 'ERROR: Code is not formatted. Please run "pnpm format" and commit the changes.'
-            git status
             git --no-pager diff
             exit 1
           fi
