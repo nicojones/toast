@@ -1,4 +1,4 @@
-import type { Position, ToastAnimations, Variant } from "../types/toast.types";
+import type { ToastPosition, ToastAnimations, Variant } from "../types/toast.types";
 
 /* Default icon colors */
 
@@ -12,7 +12,7 @@ export const iconsColors: Record<Variant, string> = {
 
 /* Default animations */
 
-const ANIMATION_ENTER_MAP: Record<Position, string> = {
+const ANIMATION_ENTER_MAP: Record<ToastPosition, string> = {
   "top-left": "t_slide-enter-top",
   "top-right": "t_slide-enter-top",
   "top-center": "t_slide-enter-top",
@@ -21,7 +21,7 @@ const ANIMATION_ENTER_MAP: Record<Position, string> = {
   "bottom-center": "t_slide-enter-bottom",
 };
 
-const ANIMATION_EXIT_MAP: Record<Position, string> = {
+const ANIMATION_EXIT_MAP: Record<ToastPosition, string> = {
   "top-left": "t-slide-exit-top",
   "top-right": "t-slide-exit-top",
   "top-center": "t-slide-exit-top",
@@ -32,7 +32,7 @@ const ANIMATION_EXIT_MAP: Record<Position, string> = {
 
 /* Swipe exit animations */
 
-const ANIMATION_SWIPE_EXIT_MAP: Record<Position, string> = {
+const ANIMATION_SWIPE_EXIT_MAP: Record<ToastPosition, string> = {
   "top-left": "t_swipe-exit-left",
   "top-right": "t_swipe-exit-right",
   "top-center": "t_swipe-exit-center",
@@ -44,7 +44,7 @@ const ANIMATION_SWIPE_EXIT_MAP: Record<Position, string> = {
 export const getAnimationClass = (
   isExiting: boolean,
   animationType: ToastAnimations,
-  position: Position,
+  position: ToastPosition,
 ) => {
   if (!isExiting) {
     return ANIMATION_ENTER_MAP[position];

@@ -1,5 +1,5 @@
 import type {
-  Position,
+  ToastPosition,
   ToastIcons,
   ToastOptions,
   ToastPropsWithLoading,
@@ -15,7 +15,7 @@ import { cn, getSystemTheme, prefersReducedMotion } from "../utils";
 import { iconsColors, getAnimationClass } from "./default-options";
 
 interface ToastComponentProps extends ToastPropsWithLoading {
-  toastPosition: Position;
+  toastPosition: ToastPosition;
   toastOptions?: ToastOptions;
   active?: boolean;
   onClose: () => void;
@@ -128,7 +128,7 @@ const Toast = (props: ToastComponentProps) => {
           setToastText(props.options!.success);
           setIconColor(iconsColors.success);
           if (props.options?.onSuccess) {
-            props.options.onSuccess(data);
+            props.options.onSuccess(data, props.id!);
           }
         })
         .catch((error) => {
@@ -141,18 +141,11 @@ const Toast = (props: ToastComponentProps) => {
             }, delayDuration);
           }
           if (props.options?.onError) {
-            props.options.onError(error, props.id);
+            props.options.onError(error, props.id!);
           }
         });
     }
-  }, [
-    delayDuration,
-    handleCloseToast,
-    pause,
-    props.options,
-    props.variant,
-    resume,
-  ]);
+  }, [delayDuration, handleCloseToast, pause, props.id, props.options, props.variant, resume]);
 
   return (
     <div
