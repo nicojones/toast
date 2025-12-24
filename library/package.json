@@ -1,6 +1,6 @@
 {
   "name": "@nicojones/toast",
-  "version": "2.2.2",
+  "version": "2.2.4",
   "author": "@nicojones",
   "description": "A simple notification library for React. Fully customizable and lightweight.",
   "repository": {

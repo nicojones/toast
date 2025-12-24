@@ -3,7 +3,7 @@ const config = {
   trailingComma: 'all',
   semi: true,
   singleQuote: false,
-  plugins: ['prettier-plugin-astro', 'prettier-plugin-tailwindcss'],
+  plugins: [],
   overrides: [
     {
       files: '*.astro',

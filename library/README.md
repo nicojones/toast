@@ -209,7 +209,7 @@ toast.loading({
     onSuccess: (data) => {
       console.log("Received:", data);
       // Replace the toast and use received data
-      toast.success({ text: data.message, id })
+      toast.success({ text: data.message, id });
     },
   },
 });
@@ -341,7 +341,7 @@ import { Info, CircleX, CircleAlert, CircleCheck, Loader } from "lucide-react";
       loading: <Loader className="animate-spin text-gray-500" />,
     },
   }}
-/>
+/>;
 ```
 
 #### Custom Styles
@@ -506,36 +506,36 @@ import ShowToast from "../components/showToast";
 
 The `toast` function accepts the following options:
 
-| Property        | Description                                   | Type                                                                          | Required |
-| --------------- | --------------------------------------------- | ----------------------------------------------------------------------------- | -------- |
-| `text`          | Notification title                            | `string`                                                                      | ✅       |
-| `description`   | Toast's description                           | `string`                                                                      | -        |
-| `icon`          | Icon to display in the toast                  | `ReactNode`                                                                   | -        |
-| `delayDuration` | Duration before the toast disappears          | `number` (default: `4000`)                                                    | -        |
-| `variant`       | Variant of the toast                          | `Variant`: `info`, `success`, `warning`, `error` or `loading`                 | -        |
-| `theme`         | Theme of the toast                            | `Theme` (default: `system`): `light`, `dark` or `system`                      | -        |
-| `action`        | Show an _Action_ button and execute a function | `{ content?: string \| ReactNode, onClick: () => void \| Promise<void> }`     | -        |
-| `id`            | Set a unique `id` to replace an existing toast or ensure there are no duplicates | `string` or `number`                       | -        |
-| `attrs`         | Custom HTML attributes                        | `HTMLProps<HTMLDivElement>`                                                   | -        |
+| Property        | Description                                                                      | Type                                                                      | Required |
+| --------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------- | -------- |
+| `text`          | Notification title                                                               | `string`                                                                  | ✅       |
+| `description`   | Toast's description                                                              | `string`                                                                  | -        |
+| `icon`          | Icon to display in the toast                                                     | `ReactNode`                                                               | -        |
+| `delayDuration` | Duration before the toast disappears                                             | `number` (default: `4000`)                                                | -        |
+| `variant`       | Variant of the toast                                                             | `Variant`: `info`, `success`, `warning`, `error` or `loading`             | -        |
+| `theme`         | Theme of the toast                                                               | `Theme` (default: `system`): `light`, `dark` or `system`                  | -        |
+| `action`        | Show an _Action_ button and execute a function                                   | `{ content?: string \| ReactNode, onClick: () => void \| Promise<void> }` | -        |
+| `id`            | Set a unique `id` to replace an existing toast or ensure there are no duplicates | `string` or `number`                                                      | -        |
+| `attrs`         | Custom HTML attributes                                                           | `HTMLProps<HTMLDivElement>`                                               | -        |
 
 ### `toast.loading()`
 
 The `toast.loading` function accepts the same options as above, plus:
 
-| Property        | Description                                   | Type                                                                          | Required |
-| --------------- | --------------------------------------------- | ----------------------------------------------------------------------------- | -------- |
-| `options`       | Loading-specific options                      | `LoadingType`                                                                 | -        |
+| Property  | Description              | Type          | Required |
+| --------- | ------------------------ | ------------- | -------- |
+| `options` | Loading-specific options | `LoadingType` | -        |
 
 #### `LoadingType`
 
-| Property      | Description                                   | Type                                    | Required |
-| ------------- | --------------------------------------------- | --------------------------------------- | -------- |
-| `promise`     | Promise or function that returns a promise    | `Promise<T>` or `() => Promise<T>`      | ✅       |
-| `success`     | Success message                               | `string`                                | ✅       |
-| `error`       | Error message                                 | `string`                                | ✅       |
-| `autoDismiss` | Close toast automatically after promise       | `boolean`                               | ✅       |
-| `onSuccess`  | Callback when promise resolves                 | `(data: T, id: ToastId) => void`        | -        |
-| `onError`     | Callback when promise rejects                 | `(error: Error, id: ToastId) => void`   | -        |
+| Property      | Description                                | Type                                  | Required |
+| ------------- | ------------------------------------------ | ------------------------------------- | -------- |
+| `promise`     | Promise or function that returns a promise | `Promise<T>` or `() => Promise<T>`    | ✅       |
+| `success`     | Success message                            | `string`                              | ✅       |
+| `error`       | Error message                              | `string`                              | ✅       |
+| `autoDismiss` | Close toast automatically after promise    | `boolean`                             | ✅       |
+| `onSuccess`   | Callback when promise resolves             | `(data: T, id: ToastId) => void`      | -        |
+| `onError`     | Callback when promise rejects              | `(error: Error, id: ToastId) => void` | -        |
 
 ### `toast.close()`
 
@@ -571,12 +571,12 @@ The `<Toaster />` component accepts the following options:
 
 ### `ToastClassnames`
 
-| Property    | Description                           | Type     | Required |
-| ----------- | ------------------------------------- | -------- | -------- |
-| `toast`     | Global toast style                    | `string` | -        |
-| `container` | Toast container styles                | `string` | -        |
-| `icon`      | Styles for the main icon of the toast | `string` | -        |
-| `content`   | Styles for title and description      | `string` | -        |
+| Property    | Description                           | Type                           | Required |
+| ----------- | ------------------------------------- | ------------------------------ | -------- |
+| `toast`     | Global toast style                    | `string`                       | -        |
+| `container` | Toast container styles                | `string`                       | -        |
+| `icon`      | Styles for the main icon of the toast | `string`                       | -        |
+| `content`   | Styles for title and description      | `string`                       | -        |
 | `actions`   | Styles for the buttons                | `ToastActionsCustomClassnames` | -        |
 
 ### `ToastActionsCustomClassnames`

@@ -15,7 +15,7 @@ export type Theme = "light" | "dark" | "system";
 export type ToastAction = {
   content?: string | ReactNode;
   onClick: () => void | (() => Promise<void>);
-}
+};
 
 export type ToastIcons = Record<Variant, ReactNode>;
 
@@ -36,7 +36,7 @@ export type ToastProps = {
   /**
    * Set any HTML Attributes to the notification
    */
-  attrs?: HTMLProps<HTMLDivElement>;
+  attrs?: HTMLProps<HTMLDivElement> & { "data-testid"?: string };
 };
 
 export type ToastLoadingType<T = unknown> = {
@@ -46,13 +46,13 @@ export type ToastLoadingType<T = unknown> = {
   autoDismiss: boolean;
   onSuccess?: (data: T, id: ToastId) => void;
   onError?: (error: Error, id: ToastId) => void;
-}
+};
 
 type ToastActionsCustomClassnames = {
   container: string;
   closeBtn: string;
   actionBtn: string;
-}
+};
 
 export type ToastClassnames = {
   toast?: string;
@@ -60,7 +60,7 @@ export type ToastClassnames = {
   icon?: string;
   content?: string;
   actions?: ToastActionsCustomClassnames;
-}
+};
 
 export type ToastAnimations = "slide" | "swipe";
 
@@ -76,7 +76,7 @@ export type ToastOptions = {
 
 export type ToasterHTMLElementProperties = Omit<
   HTMLProps<HTMLElement>,
-  'aria-role' | 'aria-label' | 'role' | 'className'
+  "aria-role" | "aria-label" | "role" | "className"
 >;
 
 export type ToasterProperties = ToasterHTMLElementProperties & {
@@ -88,11 +88,11 @@ export type ToasterProperties = ToasterHTMLElementProperties & {
 
 export type ToastPropsWithVariant = ToastProps & {
   variant?: Variant;
-}
+};
 
 export type ToastPropsWithLoading<T = unknown> = ToastPropsWithVariant & {
   options?: ToastLoadingType<T>;
-}
+};
 
 export type ToastPropsInternal = ToastPropsWithVariant & {
   /**
@@ -100,4 +100,4 @@ export type ToastPropsInternal = ToastPropsWithVariant & {
    * The {@link _key_} does not change throughout the lifecycle of a toast
    */
   _key_?: string;
-}
+};

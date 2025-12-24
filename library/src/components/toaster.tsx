@@ -37,10 +37,9 @@ export const Toaster = ({
       ...data,
     };
     setToasts((prevToasts) => {
-
       // If the `id` exists, update the notification
       let isToastUpdate = false;
-      const updatedToasts = prevToasts.map(pt => {
+      const updatedToasts = prevToasts.map((pt) => {
         if (pt.id === newToast.id) {
           isToastUpdate = true;
           return {
@@ -50,12 +49,12 @@ export const Toaster = ({
             ...newToast,
           } satisfies ToastPropsInternal;
         }
-        return pt
-      })
+        return pt;
+      });
 
       if (isToastUpdate) {
         // `newToast` is embedded, array preserves length
-        return [...updatedToasts]
+        return [...updatedToasts];
       }
 
       const isTopPosition =
