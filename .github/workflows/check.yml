@@ -18,7 +18,7 @@ jobs:
     name: 🏗️ Setup Environment
     runs-on: ubuntu-latest
     outputs:
-      node-modules-cache: ${{ steps.node-modules-cache.outputs.cache-hit }}
+      pnpm-cache-path: ${{ steps.pnpm-cache.outputs.pnpm_store_path }}
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -28,20 +28,19 @@ jobs:
         with:
           node-version: 20
 
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        id: pnpm-install
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
         with:
+          version: 8 # or your locked version
           run_install: false
 
       - name: Get pnpm store directory
         id: pnpm-cache
-        run: |
-          echo "pnpm_store_path=$(pnpm store path)" >> $GITHUB_OUTPUT
+        run: echo "pnpm_store_path=$(pnpm store path)" >> $GITHUB_OUTPUT
 
-      - name: Cache node_modules
-        id: node-modules-cache
+      - name: Cache node_modules and pnpm store
         uses: actions/cache@v4
+        id: cache
         with:
           path: |
             node_modules
@@ -51,6 +50,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Persist node_modules and pnpm store
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: node_modules_and_store
+          path: |
+            node_modules
+            ${{ steps.pnpm-cache.outputs.pnpm_store_path }}
   format:
     name: 🧱 Format
     runs-on: ubuntu-latest
