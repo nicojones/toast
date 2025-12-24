@@ -8,14 +8,12 @@ runs:
       uses: actions/setup-node@v4
       with:
         node-version: 20
-      shell: bash
 
     - uses: pnpm/action-setup@v4
       name: Install pnpm
       id: pnpm-install
       with:
         run_install: false
-      shell: bash
 
     - name: Install dependencies
       run: pnpm install
