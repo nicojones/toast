@@ -44,9 +44,8 @@ jobs:
       - name: Check for uncommitted changes
         run: |
           if [[ -n $(git status --porcelain) ]]; then
-            echo -e "\033[1;31mERROR: Code is not formatted. Please run \"pnpm format\" and commit the changes"
+            echo -e "\033[1;31mERROR: Code is not formatted. Please run \"pnpm format\" and commit the changes.\033[0m"
             git --no-pager diff
-            echo -e "\033[0m"
             exit 1
           fi
         shell: bash
