@@ -27,8 +27,6 @@ export type ToastProps = {
    * If the ID exists, it will replace the existing notification
    */
   id?: ToastId;
-  /** @internal */
-  _key_?: string;
   text: string;
   description?: string;
   icon?: ReactNode;
@@ -41,7 +39,7 @@ export type ToastProps = {
   attrs?: HTMLProps<HTMLDivElement>;
 };
 
-export type LoadingType<T = unknown> = {
+export type ToastLoadingType<T = unknown> = {
   promise: (() => Promise<T>) | Promise<T>;
   success: string;
   error: string;
@@ -93,5 +91,18 @@ export type ToastPropsWithVariant = ToastProps & {
 }
 
 export type ToastPropsWithLoading<T = unknown> = ToastPropsWithVariant & {
-  options?: LoadingType<T>;
+  options?: ToastLoadingType<T>;
+}
+
+export type ToastPropsInternal = ToastPropsWithVariant & {
+  /**
+   * @internal
+   * The {@link _key_} does not change throughout the lifecycle of a toast
+   */
+  _key_?: string;
+  /** 
+   * @internal 
+   * True when the toast has been updated, as opposed to created
+   */
+  isUpdate?: boolean;
 }

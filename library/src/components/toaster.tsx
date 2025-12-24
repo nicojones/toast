@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import type {
   ToastId,
+  ToastPropsInternal,
   ToastPropsWithVariant,
   ToasterProperties,
 } from "../types/toast.types";
@@ -21,7 +22,7 @@ export const Toaster = ({
   toastOptions,
   ...htmlProps
 }: ToasterProperties) => {
-  const [toasts, setToasts] = useState<ToastPropsWithVariant[]>([]);
+  const [toasts, setToasts] = useState<ToastPropsInternal[]>([]);
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
   useEffect(() => {
@@ -30,7 +31,7 @@ export const Toaster = ({
 
   // Define the openToast function
   const openToast = (data: ToastPropsWithVariant) => {
-    const newToast: ToastPropsWithVariant = {
+    const newToast: ToastPropsInternal = {
       _key_: generateRandomId(),
       id: generateRandomId(),
       ...data,
@@ -46,7 +47,7 @@ export const Toaster = ({
       const updatedToasts = prevToasts.map(pt => {
         if (pt.id === newToast.id) {
           isToastUpdate = true;
-          return {...pt, ...newToast}
+          return { ...pt, ...newToast, isUpdate: true } satisfies ToastPropsInternal;
         }
         return pt
       })

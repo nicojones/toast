@@ -1,6 +1,6 @@
 {
   "name": "@nicojones/toast",
-  "version": "2.0.0",
+  "version": "2.1.1",
   "author": "@nicojones",
   "description": "A simple notification library for React. Fully customizable and lightweight.",
   "repository": {
@@ -45,7 +45,7 @@
     "lint": "eslint ./src",
     "prepublishOnly": "pnpm build",
     "publish:dry-run": "pnpm build && npm pack --dry-run",
-    "publish": "pnpm build && npm publish --access public"
+    "publish:package": "pnpm build && npm publish --access public"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "6.6.3",
