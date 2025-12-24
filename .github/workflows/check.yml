@@ -14,9 +14,11 @@ concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
 
-  format:
-    name: 🧱 Format
+  setup:
+    name: 🏗️ Setup Environment
     runs-on: ubuntu-latest
+    outputs:
+      node-modules-cache: ${{ steps.node-modules-cache.outputs.cache-hit }}
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -32,33 +34,55 @@ jobs:
         with:
           run_install: false
 
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_store_path=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Cache node_modules
+        id: node-modules-cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ${{ steps.pnpm-cache.outputs.pnpm_store_path }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+
       - name: Install dependencies
         run: pnpm install
-      
+
+  format:
+    name: 🧱 Format
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Restore node_modules from cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+
       - name: Prettier - Format
         run: pnpm format
-
 
   lint:
     name: 🔎 Eslint
     runs-on: ubuntu-latest
+    needs: setup
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
 
-      - name: Install Node.js
-        uses: actions/setup-node@v4
+      - name: Restore node_modules from cache
+        uses: actions/cache@v4
         with:
-          node-version: 20
-
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        id: pnpm-install
-        with:
-          run_install: false
-
-      - name: Install dependencies
-        run: pnpm install
+          path: |
+            node_modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
 
       - name: Eslint
         run: pnpm lint
@@ -66,23 +90,17 @@ jobs:
   build:
     name: 🛫 Build Library
     runs-on: ubuntu-latest
+    needs: setup
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
 
-      - name: Install Node.js
-        uses: actions/setup-node@v4
+      - name: Restore node_modules from cache
+        uses: actions/cache@v4
         with:
-          node-version: 20
-
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        id: pnpm-install
-        with:
-          run_install: false
-
-      - name: Install dependencies
-        run: pnpm install
+          path: |
+            node_modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
 
       - name: Build library
         run: pnpm build
@@ -90,23 +108,17 @@ jobs:
   vitest:
     name: 🧪 Vitest
     runs-on: ubuntu-latest
+    needs: setup
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
 
-      - name: Install Node.js
-        uses: actions/setup-node@v4
+      - name: Restore node_modules from cache
+        uses: actions/cache@v4
         with:
-          node-version: 20
-
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        id: pnpm-install
-        with:
-          run_install: false
-
-      - name: Install dependencies
-        run: pnpm install
+          path: |
+            node_modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
 
       - name: Vitest - Library
         run: pnpm test
