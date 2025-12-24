@@ -1,6 +1,6 @@
 {
   "name": "@nicojones/toast",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "author": "@nicojones",
   "description": "A simple notification library for React. Fully customizable and lightweight.",
   "repository": {
@@ -43,7 +43,9 @@
     "test": "vitest run --config ./vitest.config.ts",
     "test:watch": "vitest --watch",
     "lint": "eslint ./src",
-    "prepublishOnly": "pnpm build"
+    "prepublishOnly": "pnpm build",
+    "publish:dry-run": "pnpm build && npm pack --dry-run",
+    "publish": "pnpm build && npm publish --access public"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "6.6.3",
