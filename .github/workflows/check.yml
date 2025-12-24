@@ -13,8 +13,9 @@ on:
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-  vitest:
-    name: 🧪 Vitest
+
+  format:
+    name: 🧱 Format
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -33,9 +34,10 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+      
+      - name: Prettier - Format
+        run: pnpm format
 
-      - name: Vitest - Library
-        run: pnpm test
 
   lint:
     name: 🔎 Eslint
@@ -84,3 +86,27 @@ jobs:
 
       - name: Build library
         run: pnpm build
+
+  vitest:
+    name: 🧪 Vitest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          run_install: false
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Vitest - Library
+        run: pnpm test
