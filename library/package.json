@@ -1,14 +1,14 @@
 {
-  "name": "@pheralb/toast",
+  "name": "@nicojones/toast",
   "version": "1.0.0",
-  "author": "@pheralb_",
-  "description": "A lightweight, customizable, and dependency-free notification library for React.",
+  "author": "@nicojones",
+  "description": "A simple notification library for React. Fully customizable and lightweight.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pheralb/toast.git"
+    "url": "git+https://github.com/nicojones/toast.git"
   },
   "bugs": {
-    "url": "https://github.com/pheralb/toast/issues"
+    "url": "https://github.com/nicojones/toast/issues"
   },
   "keywords": [
     "react",

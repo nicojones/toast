@@ -1,9 +1,9 @@
-import { toast } from "@pheralb/toast";
+import { toast } from "@nicojones/toast";
 
 const ShowToast = () => {
   const handleClick = () => {
     toast.default({
-      text: "✨ @pheralb/toast",
+      text: "✨ @nicojones/toast",
     });
   };
 

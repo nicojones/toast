@@ -603,10 +603,7 @@ pnpm install
 3. Commands:
 
 ```bash
-# Run only documentation website:
-pnpm dev:docs
-
-# Run all website + packages:
+# Run packages:
 pnpm dev
 
 # Build the docs & library:

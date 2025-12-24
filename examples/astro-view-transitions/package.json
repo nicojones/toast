@@ -1,5 +1,5 @@
 {
-  "name": "@pheralb/toast-example-astro",
+  "name": "@nicojones/toast-example-astro",
   "type": "module",
   "private": true,
   "version": "0.0.1",
@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@astrojs/react": "4.2.0",
-    "@pheralb/toast": "workspace:*",
+    "@nicojones/toast": "workspace:*",
     "@types/react": "19.0.8",
     "@types/react-dom": "19.0.3",
     "astro": "5.1.10",
