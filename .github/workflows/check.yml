@@ -41,6 +41,16 @@ jobs:
       - name: Prettier
         run: pnpm format
 
+      - name: Check for uncommitted changes
+        run: |
+          if [[ -n $(git status --porcelain) ]]; then
+            echo 'ERROR: Code is not formatted. Please run "pnpm format" and commit the changes.'
+            git status
+            git --no-pager diff
+            exit 1
+          fi
+        shell: bash
+
   build:
     name: 🛫 Build Library
     runs-on: ubuntu-latest
