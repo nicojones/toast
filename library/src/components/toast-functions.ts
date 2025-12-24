@@ -1,4 +1,5 @@
 import type {
+  ToastId,
   ToastPropsWithLoading,
   ToastPropsWithVariant
 } from '../types/toast.types';
@@ -11,6 +12,7 @@ interface ToastFunctions {
   warning: (data: ToastPropsWithVariant) => ToastPropsWithVariant;
   info: (data: ToastPropsWithVariant) => ToastPropsWithVariant;
   loading: (data: ToastPropsWithLoading) => ToastPropsWithLoading;
+  close: (id: ToastId) => void;
 }
 
 export const toast: ToastFunctions = {
@@ -38,6 +40,5 @@ export const toast: ToastFunctions = {
     openToast({ ...data, variant: 'loading' });
     return data;
   },
+  close: (id: ToastId) => closeToast(id)
 };
-
-export { closeToast };
