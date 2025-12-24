@@ -13,29 +13,6 @@ on:
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-  vitest:
-    name: 🧪 Vitest
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v4
-
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        id: pnpm-install
-        with:
-          run_install: false
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Vitest - Library
-        run: pnpm test
 
   lint:
     name: 🔎 Eslint
@@ -44,22 +21,34 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
 
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        id: pnpm-install
-        with:
-          run_install: false
-
-      - name: Install dependencies
-        run: pnpm install
+      - name: Setup
+        uses: ./.github/actions/setup
 
       - name: Eslint
         run: pnpm lint
+
+  
+  format:
+    name: 🧱 Format
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup
+        uses: ./.github/actions/setup
+
+      - name: Prettier
+        run: pnpm format
+
+      - name: Check for uncommitted changes
+        run: |
+          if [[ -n $(git status --porcelain) ]]; then
+            echo -e "\033[1;31mERROR: Code is not formatted. Please run \"pnpm format\" and commit the changes.\033[0m"
+            git --no-pager diff
+            exit 1
+          fi
+        shell: bash
 
   build:
     name: 🛫 Build Library
@@ -68,19 +57,21 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
 
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        id: pnpm-install
-        with:
-          run_install: false
-
-      - name: Install dependencies
-        run: pnpm install
+      - name: Setup
+        uses: ./.github/actions/setup
 
       - name: Build library
         run: pnpm build
+
+  vitest:
+    name: 🧪 Vitest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup
+        uses: ./.github/actions/setup
+
+      - name: Vitest - Library
+        run: pnpm test

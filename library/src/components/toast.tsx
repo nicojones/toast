@@ -16,13 +16,12 @@ import { cn, getSystemTheme, prefersReducedMotion } from "../utils";
 import { iconsColors, getAnimationClass } from "./default-options";
 
 type ToastComponentProps = ToastPropsInternal &
-  Pick<ToastPropsWithLoading, 'options'> &
-{
-  toastPosition: ToastPosition;
-  toastOptions?: ToastOptions;
-  active?: boolean;
-  onClose: () => void;
-};
+  Pick<ToastPropsWithLoading, "options"> & {
+    toastPosition: ToastPosition;
+    toastOptions?: ToastOptions;
+    active?: boolean;
+    onClose: () => void;
+  };
 
 const DEFAULT_DURATION = 4000;
 
@@ -150,7 +149,15 @@ const Toast = (props: ToastComponentProps) => {
           }
         });
     }
-  }, [delayDuration, handleCloseToast, pause, props.id, props.options, props.variant, resume]);
+  }, [
+    delayDuration,
+    handleCloseToast,
+    pause,
+    props.id,
+    props.options,
+    props.variant,
+    resume,
+  ]);
 
   return (
     <div
@@ -163,10 +170,10 @@ const Toast = (props: ToastComponentProps) => {
         prefersReducedMotion()
           ? ""
           : getAnimationClass(
-            isExiting,
-            props.toastOptions?.animationOnClose || "slide",
-            props.toastPosition,
-          ),
+              isExiting,
+              props.toastOptions?.animationOnClose || "slide",
+              props.toastPosition,
+            ),
         !props.toastOptions?.headless && props.theme === "system"
           ? getSystemTheme()
           : "",

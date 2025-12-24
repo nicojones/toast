@@ -1,4 +1,8 @@
-import type { ToastPosition, ToastAnimations, Variant } from "../types/toast.types";
+import type {
+  ToastPosition,
+  ToastAnimations,
+  Variant,
+} from "../types/toast.types";
 
 /* Default icon colors */
 

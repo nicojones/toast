@@ -1,9 +1,9 @@
 import type {
   ToastId,
   ToastPropsWithLoading,
-  ToastPropsWithVariant
-} from '../types/toast.types';
-import { openToast, closeToast } from './toaster';
+  ToastPropsWithVariant,
+} from "../types/toast.types";
+import { openToast, closeToast } from "./toaster";
 
 interface ToastFunctions {
   default: (data: ToastPropsWithVariant) => ToastPropsWithVariant;
@@ -11,7 +11,9 @@ interface ToastFunctions {
   error: (data: ToastPropsWithVariant) => ToastPropsWithVariant;
   warning: (data: ToastPropsWithVariant) => ToastPropsWithVariant;
   info: (data: ToastPropsWithVariant) => ToastPropsWithVariant;
-  loading: <T = unknown>(data: ToastPropsWithLoading<T>) => ToastPropsWithLoading<T>;
+  loading: <T = unknown>(
+    data: ToastPropsWithLoading<T>,
+  ) => ToastPropsWithLoading<T>;
   close: (id: ToastId) => void;
 }
 
@@ -21,24 +23,24 @@ export const toast: ToastFunctions = {
     return data;
   },
   success: (data: ToastPropsWithVariant) => {
-    openToast({ ...data, variant: 'success' });
+    openToast({ ...data, variant: "success" });
     return data;
   },
   error: (data: ToastPropsWithVariant) => {
-    openToast({ ...data, variant: 'error' });
+    openToast({ ...data, variant: "error" });
     return data;
   },
   warning: (data: ToastPropsWithVariant) => {
-    openToast({ ...data, variant: 'warning' });
+    openToast({ ...data, variant: "warning" });
     return data;
   },
   info: (data: ToastPropsWithVariant) => {
-    openToast({ ...data, variant: 'info' });
+    openToast({ ...data, variant: "info" });
     return data;
   },
   loading: <T = unknown>(data: ToastPropsWithLoading<T>) => {
-    openToast({ ...data, variant: 'loading' });
+    openToast({ ...data, variant: "loading" });
     return data;
   },
-  close: (id: ToastId) => closeToast(id)
+  close: (id: ToastId) => closeToast(id),
 };
