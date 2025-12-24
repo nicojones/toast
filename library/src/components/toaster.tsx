@@ -37,17 +37,18 @@ export const Toaster = ({
       ...data,
     };
     setToasts((prevToasts) => {
-      const isTopPosition =
-        position === "top-left" ||
-        position === "top-right" ||
-        position === "top-center";
 
       // If the `id` exists, update the notification
       let isToastUpdate = false;
       const updatedToasts = prevToasts.map(pt => {
         if (pt.id === newToast.id) {
           isToastUpdate = true;
-          return { ...pt, ...newToast, isUpdate: true } satisfies ToastPropsInternal;
+          return {
+            // Previous toast's settings
+            ...pt,
+            // The updated toast
+            ...newToast,
+          } satisfies ToastPropsInternal;
         }
         return pt
       })
@@ -56,6 +57,11 @@ export const Toaster = ({
         // `newToast` is embedded, array preserves length
         return [...updatedToasts]
       }
+
+      const isTopPosition =
+        position === "top-left" ||
+        position === "top-right" ||
+        position === "top-center";
 
       if (prevToasts.length >= maxToasts) {
         return isTopPosition

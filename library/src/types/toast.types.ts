@@ -100,9 +100,4 @@ export type ToastPropsInternal = ToastPropsWithVariant & {
    * The {@link _key_} does not change throughout the lifecycle of a toast
    */
   _key_?: string;
-  /** 
-   * @internal 
-   * True when the toast has been updated, as opposed to created
-   */
-  isUpdate?: boolean;
 }
