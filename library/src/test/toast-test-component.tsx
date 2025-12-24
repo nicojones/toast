@@ -23,7 +23,7 @@ const ToastActionsComponent = () => {
           text: "Hello Toast!",
           description: "This is a success toast",
           attrs: {
-            // @ts-ignore valid HTML Prop
+            // @ts-expect-error valid HTML Prop
             "data-testid": "toast-element"
           },
           action: {
