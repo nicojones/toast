@@ -10,5 +10,7 @@ export type {
   Theme as ToastTheme,
   ToastOptions,
   ToasterProperties,
+  ToastPropsWithLoading,
+  ToastPropsWithVariant,
   ToastAnimations,
 } from "./types/toast.types";

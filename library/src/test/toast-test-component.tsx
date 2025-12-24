@@ -22,6 +22,10 @@ const ToastActionsComponent = () => {
         toast.success({
           text: "Hello Toast!",
           description: "This is a success toast",
+          attrs: {
+            // @ts-expect-error valid HTML Prop
+            "data-testid": "toast-element"
+          },
           action: {
             content: "Action",
             onClick: () => {

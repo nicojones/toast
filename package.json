@@ -1,6 +1,6 @@
 {
-  "name": "@pheralb/toast-workspace",
-  "author": "@pheralb_",
+  "name": "@nicojones/toast",
+  "author": "@nicojones",
   "private": true,
   "license": "MIT",
   "packageManager": "pnpm@9.12.3",
@@ -10,21 +10,18 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
-    "dev:docs": "turbo dev --filter=@pheralb/toast-website",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "test": "turbo test",
     "test:watch": "turbo test:watch",
-    "clean": "npx rimraf library/node_modules library/dist && npx rimraf website/node_modules",
+    "clean": "npx rimraf library/node_modules library/dist",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "turbo run build --filter=@pheralb/toast && changeset publish"
+    "release": "turbo run build --filter=@nicojones/toast && changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "2.27.11",
     "prettier": "3.4.2",
-    "prettier-plugin-astro": "0.14.1",
-    "prettier-plugin-tailwindcss": "0.6.9",
     "turbo": "latest"
   }
 }

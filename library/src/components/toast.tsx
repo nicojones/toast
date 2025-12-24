@@ -141,7 +141,7 @@ const Toast = (props: ToastComponentProps) => {
             }, delayDuration);
           }
           if (props.options?.onError) {
-            props.options.onError(error);
+            props.options.onError(error, props.id);
           }
         });
     }
@@ -156,6 +156,7 @@ const Toast = (props: ToastComponentProps) => {
 
   return (
     <div
+      {...props.attrs}
       role="alert"
       aria-labelledby={`toast-title-${props.id}`}
       aria-describedby={`toast-description-${props.id}`}
@@ -179,9 +180,11 @@ const Toast = (props: ToastComponentProps) => {
           : "",
         !props.toastOptions?.headless ? "t_global" : "",
         props.toastOptions?.classNames?.toast,
+        props.attrs?.className,
       )}
       style={{
         zIndex: props.active ? 1000 : 999,
+        ...props.attrs?.style,
       }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}

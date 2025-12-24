@@ -62,7 +62,7 @@ jobs:
         run: pnpm lint
 
   build:
-    name: 🛫 Build Website & Library
+    name: 🛫 Build Library
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -82,5 +82,5 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build library & website
+      - name: Build library
         run: pnpm build

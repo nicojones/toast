@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import type {
+  ToastId,
   ToastPropsWithVariant,
   ToasterProperties,
 } from "../types/toast.types";
@@ -10,12 +11,15 @@ import { cn, generateRandomId } from "../utils";
 
 // Ensure openToastGlobal is initialized correctly
 let openToastGlobal: (data: ToastPropsWithVariant) => void;
+// Ensure closeToastGlobal is initialized correctly
+let closeToastGlobal: (id: ToastId) => void;
 
 export const Toaster = ({
   maxToasts = 4,
   position = "bottom-right",
   theme = "system",
   toastOptions,
+  ...htmlProps
 }: ToasterProperties) => {
   const [toasts, setToasts] = useState<ToastPropsWithVariant[]>([]);
   const [isMounted, setIsMounted] = useState<boolean>(false);
@@ -27,14 +31,29 @@ export const Toaster = ({
   // Define the openToast function
   const openToast = (data: ToastPropsWithVariant) => {
     const newToast = {
-      ...data,
       id: generateRandomId(),
+      ...data,
     };
     setToasts((prevToasts) => {
       const isTopPosition =
         position === "top-left" ||
         position === "top-right" ||
         position === "top-center";
+
+      // If the `id` exists, update the notification
+      let isToastUpdate = false;
+      const updatedToasts = prevToasts.map(pt => {
+        if (pt.id === newToast.id) {
+          isToastUpdate = true;
+          return {...pt, ...newToast}
+        }
+        return pt
+      })
+
+      if (isToastUpdate) {
+        // `newToast` is embedded, array preserves length
+        return [...updatedToasts]
+      }
 
       if (prevToasts.length >= maxToasts) {
         return isTopPosition
@@ -49,18 +68,21 @@ export const Toaster = ({
   };
 
   // Define the closeToast function
-  const closeToast = (id: number) => {
+  const closeToast = (id: ToastId) => {
     setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id));
   };
 
   // Assign openToast to the global variable
   openToastGlobal = openToast;
+  // Assign closeToast to the global variable
+  closeToastGlobal = closeToast;
 
   // Render the component
   return (
     isMounted &&
     toasts.length > 0 && (
       <section
+        {...htmlProps}
         aria-label="Toast Notifications"
         role="alert"
         aria-live="polite"
@@ -96,6 +118,18 @@ export const Toaster = ({
 export const openToast = (data: ToastPropsWithVariant): void => {
   if (openToastGlobal) {
     openToastGlobal(data);
+  } else {
+    console.error(
+      "🔔 <Toaster /> component is not mounted. Check toast.pheralb.dev/toaster for more information.",
+    );
+  }
+};
+
+// Export the closeToast function:
+// eslint-disable-next-line react-refresh/only-export-components
+export const closeToast = (id: ToastId): void => {
+  if (closeToastGlobal) {
+    closeToastGlobal(id);
   } else {
     console.error(
       "🔔 <Toaster /> component is not mounted. Check toast.pheralb.dev/toaster for more information.",
